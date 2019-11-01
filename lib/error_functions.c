@@ -31,6 +31,7 @@ outputError(Boolean useErr, int err, Boolean flushStdout, const char *format, va
     char buf[BUF_SIZE], userMsg[BUF_SIZE], errText[BUF_SIZE];
 
     vsnprintf(userMsg, BUF_SIZE, format, ap);
+    //printf("userMsg = %s\n", userMsg);
     
     if (useErr) {
         snprintf(errText, BUF_SIZE, " [%s %s]", (err > 0 && err <= MAX_ENAME) ? 
@@ -38,8 +39,11 @@ outputError(Boolean useErr, int err, Boolean flushStdout, const char *format, va
     } else {
         snprintf(errText, BUF_SIZE, ":");
     }
+    //printf("errText = %s\n", errText);
+
 
     snprintf(buf, BUF_SIZE, "ERROR%s %s\n", errText, userMsg);
+    //printf("buf = %s\n", buf);
 
     if (flushStdout) {
         fflush(stdout);   // Flush any pending stdout
@@ -137,7 +141,7 @@ cmdLineErr(const char *format, ...)
 
     fprintf(stderr, "Command-line usgae error: ");
     va_start(argList, format);
-    vsprintf(stderr, format, argList);
+    vfprintf(stderr, format, argList);
     va_end(argList);
 
     fflush(stderr);
