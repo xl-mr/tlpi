@@ -34,7 +34,8 @@ getNum(const char *fname, const char *arg, int flags, const char *name)
     errno = 0;
     res = strtol(arg, &endptr, base);
 
-    if (res != 0) {
+    if (errno != 0) {
+        //printf("base = %d, res = %ld\n", base, res);
         gnFail(fname, "strtol() failed", arg, name);
     }
     if (*endptr != '\0') {
